@@ -1,7 +1,11 @@
 package br.com.matheus.todolist.user;
 
+import java.util.UUID;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +38,13 @@ public class UserController {
 
         var userCreated = userRepository.save(usermodel);
 
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(userCreated);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userCreated);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable UUID id) {
+        userRepository.deleteById(id);
+
+        return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 }
